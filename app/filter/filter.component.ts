@@ -14,6 +14,7 @@ import {
 })
 export class FilterComponent implements OnInit {
   public countries = [];
+  public selectedCountry = 'FR';
 
   constructor(
     private sharedService: SharedService,
@@ -33,5 +34,6 @@ export class FilterComponent implements OnInit {
 
   OnChange(event) {
     this.sharedService.refreshMap(event);
+    this.sharedService._toggleSidebar(event);
   }
 }

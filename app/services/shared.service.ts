@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class SharedService {
 
   refreshMap: Function;
-  
+  _toggleSidebar: Function;
   constructor() { }
 
 }

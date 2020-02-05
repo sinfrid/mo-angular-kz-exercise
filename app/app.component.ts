@@ -1,6 +1,6 @@
 import { Component, OnInit, ComponentFactoryResolver, ComponentRef, Injector, DoCheck } from '@angular/core';
 import { tileLayer, latLng, marker, Marker } from 'leaflet';
-
+import { SharedService } from "./services/shared.service";
 import { HTMLMarkerComponent } from './html-marker.component';
 import { DataService } from './data.service';
 
@@ -32,7 +32,12 @@ export class AppComponent implements DoCheck {
     this._opened = !this._opened;
   }
 
-  constructor(private dataService: DataService, private resolver: ComponentFactoryResolver, private injector: Injector){}
+  constructor(private dataService: DataService, 
+  private sharedService: SharedService,
+  private resolver: ComponentFactoryResolver, 
+  private injector: Injector){
+    this.sharedService._toggleSidebar = this._toggleSidebar.bind(this);
+  }
 
   onMapReady(map) {
     // get a local reference to the map as we need it later
