@@ -18,6 +18,8 @@ import { MapMarkerComponent } from "../map/map-marker/map-marker.component";
   templateUrl: "./map.component.html",
   styleUrls: ["./map.component.css"]
 })
+
+// Main map component
 export class MapComponent implements OnInit {
   map;
   mapbounds = [];
@@ -40,6 +42,7 @@ export class MapComponent implements OnInit {
     this.sharedService.refreshMap = this.refreshMap.bind(this);
   }
 
+  // When map is finished loading
   onMapReady(map) {
     this.map = map;
     L.control
@@ -52,17 +55,17 @@ export class MapComponent implements OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.addMapMarkers("FR");
+    this.addMapMarkers("FR"); // Default Country = France
   }
 
+  // Refresh map status
   public refreshMap(event) {
     this.removeMapMarkers();
     this.addMapMarkers(event.code);
   }
-
+  // Add markers based on country
   addMapMarkers(country) {
     this.mapbounds = [];
-
     this.measurementsService.getMeasurement(country).subscribe((res: any) => {
       for (const c of res) {
         // dynamically instantiate a HTMLMarkerComponent
@@ -73,26 +76,17 @@ export class MapComponent implements OnInit {
         // we need to pass in the dependency injector
         const component = factory.create(this.injector);
 
-        const utc = this.datepipe.transform(c.date["utc"], "fullDate", "UTC");
-        const local = this.datepipe.transform(
-          c.date["local"],
-          "fullDate",
-          "UTC"
-        );
-
-        c.date["utc"] = utc;
-        c.date["local"] = local;
-
-        // wire up the @Input() or plain variables (doesn't have to be strictly an @Input())
+        // Match data
         component.instance.data = c;
 
         // we need to manually trigger change detection on our in-memory component
-        // s.t. its template syncs with the data we passed in
         component.changeDetectorRef.detectChanges();
 
+        // Match coordinates
         const lat = c.coordinates["latitude"];
         const lon = c.coordinates["longitude"];
 
+        // Create Marker
         const marker = L.marker([lat, lon]);
 
         // pass in the HTML from our dynamic component
@@ -101,20 +95,25 @@ export class MapComponent implements OnInit {
         // add popup functionality
         marker.bindPopup(popupContent).openPopup();
 
+        // Add to map
         marker.addTo(this.map);
 
+        // Add to markers list for keep track later
         this.markers.push({
           name: c.city,
           markerInstance: marker
         });
 
+        // Create bounds limits
         this.mapbounds.push([lat, lon]);
       }
 
+      // Set map view to the markers filtered
       this.map.fitBounds(this.mapbounds);
     });
   }
 
+  // Remove all map markers
   removeMapMarkers() {
     for (const c of this.markers) {
       this.map.removeLayer(c.markerInstance);

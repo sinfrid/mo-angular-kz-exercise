@@ -12,9 +12,11 @@ import {
   templateUrl: "./filter.component.html",
   styleUrls: ["./filter.component.css"]
 })
+
+// Main filter component
 export class FilterComponent implements OnInit {
   public countries = [];
-  public selectedCountry = 'FR';
+  public selectedCountry = "FR";
 
   constructor(
     private sharedService: SharedService,
@@ -22,16 +24,17 @@ export class FilterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    
     this.getCountries();
   }
 
+  // Get all countries
   getCountries(): void {
     this.countriesService.getCountries().subscribe((countries: any[]) => {
       this.countries = countries;
     });
   }
 
+  // Select on change event
   OnChange(event) {
     this.sharedService.refreshMap(event);
     this.sharedService._toggleSidebar(event);
