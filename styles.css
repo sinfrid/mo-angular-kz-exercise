@@ -1,2 +1,12 @@
 /* Add application styles & imports to this file! */
 @import "~@ng-select/ng-select/themes/default.theme.css";
+
+html, body, #container /*, and all other map parent selectors*/ {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+#map {
+  width: auto;
+  height: 100%;
+}

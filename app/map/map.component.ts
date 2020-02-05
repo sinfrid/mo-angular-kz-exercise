@@ -23,7 +23,8 @@ export class MapComponent implements OnInit {
   options = {
     layers: [tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")],
     zoom: 5,
-    center: latLng(46.879966, -121.726909)
+    maxZoom:9,
+    minZoom: 3
   };
 
   constructor(
