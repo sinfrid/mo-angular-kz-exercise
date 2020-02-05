@@ -13,10 +13,11 @@ import { FilterComponent } from './filter/filter.component';
 import { MeasurementsService } from './services/measurements.service';
 import { CountriesService } from './services/countries.service';
 import { SharedService } from './services/shared.service';
+import { MapMarkerComponent } from './map/map-marker/map-marker.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule,NgSelectModule,HttpClientModule, LeafletModule.forRoot() ],
-  declarations: [ AppComponent, HTMLMarkerComponent, MapComponent, FilterComponent ],
+  declarations: [ AppComponent, HTMLMarkerComponent, MapComponent, FilterComponent, MapMarkerComponent ],
   providers: [ DataService, MeasurementsService, CountriesService, SharedService ],
   // IMPORTANT! Dynamic components need to be registered here
   entryComponents: [HTMLMarkerComponent],
