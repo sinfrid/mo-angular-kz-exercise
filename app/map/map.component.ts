@@ -19,7 +19,7 @@ import { MapMarkerComponent } from "../map/map-marker/map-marker.component";
   styleUrls: ["./map.component.css"]
 })
 
-// Main map component
+// Main map component using LeafletJS
 export class MapComponent implements OnInit {
   map;
   mapbounds = [];

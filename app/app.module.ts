@@ -13,6 +13,8 @@ import { MeasurementsService } from "./services/measurements.service";
 import { CountriesService } from "./services/countries.service";
 import { SharedService } from "./services/shared.service";
 import { MapMarkerComponent } from "./map/map-marker/map-marker.component";
+import { NgProgressModule } from "ngx-progressbar";
+import { NgProgressHttpModule } from "ngx-progressbar/http";
 
 @NgModule({
   imports: [
@@ -20,6 +22,12 @@ import { MapMarkerComponent } from "./map/map-marker/map-marker.component";
     FormsModule,
     NgSelectModule,
     HttpClientModule,
+    NgProgressModule.withConfig({
+      spinnerPosition: "right",
+      color: "#ff6600",
+      thick: true
+    }),
+    NgProgressHttpModule,
     LeafletModule.forRoot(),
     SidebarModule.forRoot()
   ],
@@ -29,12 +37,7 @@ import { MapMarkerComponent } from "./map/map-marker/map-marker.component";
     FilterComponent,
     MapMarkerComponent
   ],
-  providers: [
-    MeasurementsService,
-    CountriesService,
-    SharedService,
-    DatePipe
-  ],
+  providers: [MeasurementsService, CountriesService, SharedService, DatePipe],
   // IMPORTANT! Dynamic components need to be registered here
   entryComponents: [MapMarkerComponent],
   bootstrap: [AppComponent]
