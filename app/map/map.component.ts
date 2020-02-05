@@ -6,7 +6,7 @@ import {
   Injector,
   DoCheck
 } from "@angular/core";
-import { DatePipe } from '@angular/common';
+import { DatePipe } from "@angular/common";
 import { tileLayer, latLng, marker, Marker } from "leaflet";
 import { SharedService } from "../services/shared.service";
 import { MeasurementsService } from "../services/measurements.service";
@@ -25,9 +25,9 @@ export class MapComponent implements OnInit {
   options = {
     layers: [tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")],
     zoom: 5,
-    maxZoom:9,
+    maxZoom: 9,
     minZoom: 3,
-        zoomControl: false
+    zoomControl: false
   };
 
   constructor(
@@ -42,9 +42,11 @@ export class MapComponent implements OnInit {
 
   onMapReady(map) {
     this.map = map;
-        L.control.zoom({
-        position: 'bottomright'
-    }).addTo(map);
+    L.control
+      .zoom({
+        position: "bottomright"
+      })
+      .addTo(map);
   }
 
   ngOnInit() {}
@@ -63,36 +65,41 @@ export class MapComponent implements OnInit {
 
     this.measurementsService.getMeasurement(country).subscribe((res: any) => {
       for (const c of res) {
-      // dynamically instantiate a HTMLMarkerComponent
-      const factory = this.resolver.resolveComponentFactory(MapMarkerComponent);
+        // dynamically instantiate a HTMLMarkerComponent
+        const factory = this.resolver.resolveComponentFactory(
+          MapMarkerComponent
+        );
 
-      // we need to pass in the dependency injector
-      const component = factory.create(this.injector);
+        // we need to pass in the dependency injector
+        const component = factory.create(this.injector);
 
-      const utc = this.datepipe.transform(c.date["utc"], 'fullDate','UTC');
-      const local = this.datepipe.transform(c.date["local"], 'fullDate','UTC');
+        const utc = this.datepipe.transform(c.date["utc"], "fullDate", "UTC");
+        const local = this.datepipe.transform(
+          c.date["local"],
+          "fullDate",
+          "UTC"
+        );
 
+        c.date["utc"] = utc;
+        c.date["local"] = local;
 
-      c.date["utc"] = utc;
-      c.date["local"] = local;
+        // wire up the @Input() or plain variables (doesn't have to be strictly an @Input())
+        component.instance.data = c;
 
-      // wire up the @Input() or plain variables (doesn't have to be strictly an @Input())
-      component.instance.data = c;
-
-      // we need to manually trigger change detection on our in-memory component
-      // s.t. its template syncs with the data we passed in
-      component.changeDetectorRef.detectChanges();
+        // we need to manually trigger change detection on our in-memory component
+        // s.t. its template syncs with the data we passed in
+        component.changeDetectorRef.detectChanges();
 
         const lat = c.coordinates["latitude"];
         const lon = c.coordinates["longitude"];
 
         const marker = L.marker([lat, lon]);
 
-      // pass in the HTML from our dynamic component
-      const popupContent = component.location.nativeElement;
+        // pass in the HTML from our dynamic component
+        const popupContent = component.location.nativeElement;
 
-      // add popup functionality
-      marker.bindPopup(popupContent).openPopup();
+        // add popup functionality
+        marker.bindPopup(popupContent).openPopup();
 
         marker.addTo(this.map);
 

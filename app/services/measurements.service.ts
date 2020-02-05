@@ -10,17 +10,18 @@ import {
 import { LatLngExpression } from "leaflet";
 import { Measurement } from "../classes/measurement";
 
+// Service to get data from  the OPEN AQ API
 @Injectable()
 export class MeasurementsService {
-
-private measurementsUrl = 'https://api.openaq.org/v1/measurements?has_geo=true&country=';  // URL to web api
+  private measurementsUrl =
+    "https://api.openaq.org/v1/measurements?has_geo=true&country="; // URL to web api
 
   constructor(private http: HttpClient) {}
 
-    getMeasurement(country): Observable<Measurement[]> {
+// Service to get measurement data
+  getMeasurement(country): Observable<Measurement[]> {
     return this.http
-        .get(this.measurementsUrl + country)
-        .pipe(map(result=>result["results"]))
-}
-
+      .get(this.measurementsUrl + country)
+      .pipe(map(result => result["results"]));
+  }
 }
