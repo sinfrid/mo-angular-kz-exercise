@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { SharedService } from "../services/shared.service";
 import { CountriesService } from "../services/countries.service";
+import { CitiesService } from "../services/cities.service";
+import { TitleCasePipe } from "@angular/common";
+
 import {
   NgSelectModule,
   NgOption,
@@ -16,15 +19,20 @@ import {
 // Main filter component
 export class FilterComponent implements OnInit {
   public countries = [];
+  public cities = [];
   public selectedCountry = "FR";
+  public selectedCity = null;
 
   constructor(
     private sharedService: SharedService,
-    private countriesService: CountriesService
+    private countriesService: CountriesService,
+    private citiesService: CitiesService,
+    private titlecasePipe: TitleCasePipe
   ) {}
 
   ngOnInit() {
     this.getCountries();
+    this.getCitiesByCountry(this.selectedCountry);
   }
 
   // Get all countries
@@ -34,9 +42,33 @@ export class FilterComponent implements OnInit {
     });
   }
 
+  // Get all cities by country
+  getCitiesByCountry(country): void {
+    this.citiesService
+      .getCitiesByCountry(country)
+      .subscribe((cities: any[]) => {
+        for (const c of cities) {
+          c.name = this.titlecasePipe.transform(c.name);
+        }
+        this.cities = cities;
+      });
+  }
+
   // Select on change event
   OnChange(event) {
-    this.sharedService.refreshMap(event);
-    this.sharedService._toggleSidebar(event);
+    this.selectedCity = null;
+    if (this.selectedCountry != null) {
+      this.getCitiesByCountry(this.selectedCountry);
+      this.sharedService.refreshMap(event);
+      this.sharedService._toggleSidebar(event);
+    }
+  }
+
+  // Select on change event
+  OnCityChange(event) {
+    if (this.selectedCity != null) {
+      this.sharedService.refreshMap(this.selectedCountry, event);
+      this.sharedService._toggleSidebar(event);
+    }
   }
 }

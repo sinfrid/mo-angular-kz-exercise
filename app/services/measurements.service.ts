@@ -14,14 +14,21 @@ import { Measurement } from "../classes/measurement";
 @Injectable()
 export class MeasurementsService {
   private measurementsUrl =
-    "https://api.openaq.org/v1/measurements?has_geo=true&country="; // URL to web api
+    "https://api.openaq.org/v1/measurements?has_geo=true"; // URL to web api
 
   constructor(private http: HttpClient) {}
 
 // Service to get measurement data
   getMeasurement(country): Observable<Measurement[]> {
     return this.http
-      .get(this.measurementsUrl + country)
+      .get(this.measurementsUrl + "&country=" + country)
+      .pipe(map(result => result["results"]));
+  }
+
+  // Service to get measurement data
+  getMeasurementByCity(city): Observable<Measurement[]> {
+    return this.http
+      .get(this.measurementsUrl + "&city=" + city)
       .pipe(map(result => result["results"]));
   }
 }

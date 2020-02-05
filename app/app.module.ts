@@ -12,9 +12,11 @@ import { FilterComponent } from "./filter/filter.component";
 import { MeasurementsService } from "./services/measurements.service";
 import { CountriesService } from "./services/countries.service";
 import { SharedService } from "./services/shared.service";
+import { CitiesService } from "./services/cities.service";
 import { MapMarkerComponent } from "./map/map-marker/map-marker.component";
 import { NgProgressModule } from "ngx-progressbar";
 import { NgProgressHttpModule } from "ngx-progressbar/http";
+import { TitleCasePipe } from "@angular/common";
 
 @NgModule({
   imports: [
@@ -37,7 +39,7 @@ import { NgProgressHttpModule } from "ngx-progressbar/http";
     FilterComponent,
     MapMarkerComponent
   ],
-  providers: [MeasurementsService, CountriesService, SharedService, DatePipe],
+  providers: [MeasurementsService, CountriesService, SharedService, DatePipe, CitiesService,TitleCasePipe],
   // IMPORTANT! Dynamic components need to be registered here
   entryComponents: [MapMarkerComponent],
   bootstrap: [AppComponent]

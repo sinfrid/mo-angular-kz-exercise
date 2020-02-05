@@ -1,3 +1,7 @@
 <ng-select [items]="countries" bindLabel="name" bindValue="code" placeholder="Select country" class="custom"
-	(change)="OnChange($event)" [(ngModel)]="selectedCountry" ng-if="name !=''">
+	(change)="OnChange($event)" [(ngModel)]="selectedCountry" >
+</ng-select>
+
+<ng-select [items]="cities" bindLabel="name" bindValue="name" placeholder="Select city" class="custom"
+	(change)="OnCityChange($event)" [(ngModel)]="selectedCity" >
 </ng-select>
