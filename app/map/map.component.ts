@@ -9,6 +9,7 @@ import {
 import { tileLayer, latLng, marker, Marker } from "leaflet";
 import { SharedService } from "../services/shared.service";
 import { MeasurementsService } from "../services/measurements.service";
+import { MarkerMetaData } from "../interfaces/marker-meta-data.service";
 
 @Component({
   selector: "app-map",
@@ -18,6 +19,7 @@ import { MeasurementsService } from "../services/measurements.service";
 export class MapComponent implements OnInit {
   map;
   mapbounds = [];
+  markers: MarkerMetaData[] = [];
   options = {
     layers: [tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")],
     zoom: 5,
@@ -26,13 +28,13 @@ export class MapComponent implements OnInit {
 
   constructor(
     private sharedService: SharedService,
-    private measurementsService: MeasurementsService
+    private measurementsService: MeasurementsService,
+    private injector: Injector
   ) {
-    this.sharedService.refreshMap = this.refreshMap;
+    this.sharedService.refreshMap = this.refreshMap.bind(this);
   }
 
   onMapReady(map) {
-    // get a local reference to the map as we need it later
     this.map = map;
   }
 
@@ -43,7 +45,8 @@ export class MapComponent implements OnInit {
   }
 
   public refreshMap(event) {
-    alert(event.code);
+    this.removeMapMarkers();
+    this.addMapMarkers(event.code);
   }
 
   addMapMarkers(country) {
@@ -58,10 +61,21 @@ export class MapComponent implements OnInit {
 
         marker.addTo(this.map);
 
+        this.markers.push({
+          name: c.city,
+          markerInstance: marker
+        });
+
         this.mapbounds.push([lat, lon]);
       }
 
       this.map.fitBounds(this.mapbounds);
     });
+  }
+
+  removeMapMarkers() {
+    for (const c of this.markers) {
+      this.map.removeLayer(c.markerInstance);
+    }
   }
 }
