@@ -24,7 +24,8 @@ export class MapComponent implements OnInit {
     layers: [tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")],
     zoom: 5,
     maxZoom:9,
-    minZoom: 3
+    minZoom: 3,
+        zoomControl: false
   };
 
   constructor(
@@ -37,6 +38,9 @@ export class MapComponent implements OnInit {
 
   onMapReady(map) {
     this.map = map;
+        L.control.zoom({
+        position: 'bottomright'
+    }).addTo(map);
   }
 
   ngOnInit() {}

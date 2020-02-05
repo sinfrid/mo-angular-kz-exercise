@@ -21,11 +21,13 @@ export class FilterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    
     this.getCountries();
   }
 
   getCountries(): void {
     this.countriesService.getCountries().subscribe((data: any[]) => {
+      
       this.countries = data;
     });
   }
