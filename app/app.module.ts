@@ -39,7 +39,14 @@ import { TitleCasePipe } from "@angular/common";
     FilterComponent,
     MapMarkerComponent
   ],
-  providers: [MeasurementsService, CountriesService, SharedService, DatePipe, CitiesService,TitleCasePipe],
+  providers: [
+    MeasurementsService,
+    CountriesService,
+    SharedService,
+    DatePipe,
+    CitiesService,
+    TitleCasePipe
+  ],
   // IMPORTANT! Dynamic components need to be registered here
   entryComponents: [MapMarkerComponent],
   bootstrap: [AppComponent]
