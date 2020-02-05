@@ -26,9 +26,8 @@ export class FilterComponent implements OnInit {
   }
 
   getCountries(): void {
-    this.countriesService.getCountries().subscribe((data: any[]) => {
-      
-      this.countries = data;
+    this.countriesService.getCountries().subscribe((countries: any[]) => {
+      this.countries = countries;
     });
   }
 
