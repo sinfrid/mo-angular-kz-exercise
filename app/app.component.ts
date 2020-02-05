@@ -12,17 +12,7 @@ interface MarkerMetaData {
 
 @Component({
   selector: 'my-app',
-  template: `
-    <div style="height: 400px; width: 600px"
-      leaflet 
-      [leafletOptions]="options"
-      (leafletMapReady)="onMapReady($event)">
-    </div>
-    <button (click)="addMarker()">Add markers</button>
-    <button (click)="mutateMarkerData()">Mutate data</button>
-    <hr />
-    <span *ngFor="let marker of markers" style="border:1px solid black; margin:5px;">{{ marker.name }} <a href="#" (click)="removeMarker(marker)">(remove)</a></span>
-  `
+  templateUrl: './app.component.html',
 })
 export class AppComponent implements DoCheck {
   map;
