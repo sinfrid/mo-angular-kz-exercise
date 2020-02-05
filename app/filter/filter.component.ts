@@ -20,7 +20,7 @@ import {
 export class FilterComponent implements OnInit {
   public countries = [];
   public cities = [];
-  public selectedCountry = "FR";
+  public selectedCountry = "NL";
   public selectedCity = null;
 
   constructor(
@@ -48,7 +48,7 @@ export class FilterComponent implements OnInit {
       .getCitiesByCountry(country)
       .subscribe((cities: any[]) => {
         for (const c of cities) {
-          c.name = this.titlecasePipe.transform(c.name);
+          c.city = this.titlecasePipe.transform(c.city);
         }
         this.cities = cities;
       });

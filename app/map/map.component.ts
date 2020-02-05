@@ -56,7 +56,7 @@ export class MapComponent implements OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.addMapMarkers("FR"); // Default Country = France
+    this.addMapMarkers("NL"); // Default Country = Netherlands
   }
 
   // Refresh map status
@@ -64,7 +64,7 @@ export class MapComponent implements OnInit {
     this.removeMapMarkers();
     this.addMapMarkers(event.code, city);
   }
-  // Add markers based on country
+  // Add markers based on country or city
   addMapMarkers(country, city?) {
     if (city) {
       this.measurementsService
