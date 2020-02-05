@@ -26,6 +26,12 @@ export class AppComponent implements DoCheck {
     center: latLng(46.879966, -121.726909)
   };
 
+  private _opened: boolean = false;
+ 
+  private _toggleSidebar() {
+    this._opened = !this._opened;
+  }
+
   constructor(private dataService: DataService, private resolver: ComponentFactoryResolver, private injector: Injector){}
 
   onMapReady(map) {

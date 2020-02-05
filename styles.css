@@ -1,7 +1,8 @@
 /* Add application styles & imports to this file! */
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
-html, body, #container /*, and all other map parent selectors*/ {
+/* General HTML */
+html, body, my-app{
   height: 100%;
   overflow: hidden;
   width: 100%;
@@ -9,4 +10,72 @@ html, body, #container /*, and all other map parent selectors*/ {
 #map {
   width: auto;
   height: 100%;
+}
+
+/* ng-select */
+.ng-sidebar
+{
+  background-color: white;
+  z-index: 5000 !important;
+}
+
+.ng-select.custom {
+ color: #ff6600;
+}
+.ng-select.custom .ng-select-container  {            
+color: #ff6600;
+}
+
+.ng-option.ng-option-selected
+{
+  color: white !important;
+    background-color: #ff6600 !important
+}
+
+.ng-option.ng-option-marked
+{
+color: white !important;
+    background-color: #ff6600 !important
+}
+
+.ng-option 
+{
+  color:gray !important;
+}
+
+/* Bootstrap */
+.card-img-top
+{
+  margin-top: 20px !important;
+    width: 80%;
+    margin: auto;
+    margin-bottom:20px !important;
+}
+
+.border-secondary {
+    border-color:#DCDCDC !important
+}
+
+.card-body
+{
+      border-top: 1px solid #DCDCDC;
+
+}
+
+.navbar-toggler
+{
+  color: rgb(255, 38, 0);
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: #FDFDFD;
+}
+
+.btn-primary
+{
+  border-color: #ff6600;
+    background-color: #ff6600;
+}
+
+.leaflet-popup-content-wrapper
+{
+  background: none !important;
 }

@@ -6,6 +6,7 @@ import {
   Injector,
   DoCheck
 } from "@angular/core";
+import { DatePipe } from '@angular/common';
 import { tileLayer, latLng, marker, Marker } from "leaflet";
 import { SharedService } from "../services/shared.service";
 import { MeasurementsService } from "../services/measurements.service";
@@ -33,7 +34,8 @@ export class MapComponent implements OnInit {
     private sharedService: SharedService,
     private measurementsService: MeasurementsService,
     private injector: Injector,
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private datepipe: DatePipe
   ) {
     this.sharedService.refreshMap = this.refreshMap.bind(this);
   }
@@ -66,6 +68,13 @@ export class MapComponent implements OnInit {
 
       // we need to pass in the dependency injector
       const component = factory.create(this.injector);
+
+      const utc = this.datepipe.transform(c.date["utc"], 'fullDate','UTC');
+      const local = this.datepipe.transform(c.date["local"], 'fullDate','UTC');
+
+
+      c.date["utc"] = utc;
+      c.date["local"] = local;
 
       // wire up the @Input() or plain variables (doesn't have to be strictly an @Input())
       component.instance.data = c;

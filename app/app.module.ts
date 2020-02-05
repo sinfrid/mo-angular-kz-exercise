@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 import { HTMLMarkerComponent } from './html-marker.component';
-
+import { SidebarModule } from 'ng-sidebar';
 import { DataService } from './data.service';
 import { MapComponent } from './map/map.component';
 import { FilterComponent } from './filter/filter.component';
@@ -16,9 +17,9 @@ import { SharedService } from './services/shared.service';
 import { MapMarkerComponent } from './map/map-marker/map-marker.component';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule,NgSelectModule,HttpClientModule, LeafletModule.forRoot() ],
+  imports:      [ BrowserModule, FormsModule,NgSelectModule,HttpClientModule, LeafletModule.forRoot(), SidebarModule.forRoot() ],
   declarations: [ AppComponent, HTMLMarkerComponent, MapComponent, FilterComponent, MapMarkerComponent ],
-  providers: [ DataService, MeasurementsService, CountriesService, SharedService ],
+  providers: [ DataService, MeasurementsService, CountriesService, SharedService ,DatePipe],
   // IMPORTANT! Dynamic components need to be registered here
   entryComponents: [MapMarkerComponent],
   bootstrap:    [ AppComponent ]
