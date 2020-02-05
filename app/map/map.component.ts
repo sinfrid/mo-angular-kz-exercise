@@ -10,6 +10,7 @@ import { tileLayer, latLng, marker, Marker } from "leaflet";
 import { SharedService } from "../services/shared.service";
 import { MeasurementsService } from "../services/measurements.service";
 import { MarkerMetaData } from "../interfaces/marker-meta-data.service";
+import { MapMarkerComponent } from "../map/map-marker/map-marker.component";
 
 @Component({
   selector: "app-map",
@@ -31,7 +32,8 @@ export class MapComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     private measurementsService: MeasurementsService,
-    private injector: Injector
+    private injector: Injector,
+    private resolver: ComponentFactoryResolver
   ) {
     this.sharedService.refreshMap = this.refreshMap.bind(this);
   }
@@ -59,10 +61,29 @@ export class MapComponent implements OnInit {
 
     this.measurementsService.getMeasurement(country).subscribe((res: any) => {
       for (const c of res) {
+      // dynamically instantiate a HTMLMarkerComponent
+      const factory = this.resolver.resolveComponentFactory(MapMarkerComponent);
+
+      // we need to pass in the dependency injector
+      const component = factory.create(this.injector);
+
+      // wire up the @Input() or plain variables (doesn't have to be strictly an @Input())
+      component.instance.data = c;
+
+      // we need to manually trigger change detection on our in-memory component
+      // s.t. its template syncs with the data we passed in
+      component.changeDetectorRef.detectChanges();
+
         const lat = c.coordinates["latitude"];
         const lon = c.coordinates["longitude"];
 
         const marker = L.marker([lat, lon]);
+
+      // pass in the HTML from our dynamic component
+      const popupContent = component.location.nativeElement;
+
+      // add popup functionality
+      marker.bindPopup(popupContent).openPopup();
 
         marker.addTo(this.map);
 

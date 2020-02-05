@@ -20,7 +20,7 @@ import { MapMarkerComponent } from './map/map-marker/map-marker.component';
   declarations: [ AppComponent, HTMLMarkerComponent, MapComponent, FilterComponent, MapMarkerComponent ],
   providers: [ DataService, MeasurementsService, CountriesService, SharedService ],
   // IMPORTANT! Dynamic components need to be registered here
-  entryComponents: [HTMLMarkerComponent],
+  entryComponents: [MapMarkerComponent],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
