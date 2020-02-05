@@ -2,12 +2,12 @@
 	<div class="card-body text-secondary">
 		<h4 class="card-title">{{ data.value }} {{ data.unit }}</h4>
 		<h6 class="card-title">{{ data.city }}</h6>
-		<p class="card-text">{{ data.date["utc"] | date : 'fullDate' }}</p>
+		<p class="card-text">{{ data.date["utc"] | date : 'longDate' }}</p>
 	</div>
 	<div class="card-footer">
+    <p class="card-text text-left">{{ data.sourceName }}</p>
 		<p class="card-text text-right">
 			<small class="text-muted">{{ data.coordinates["latitude"] | number}} / {{ data.coordinates["longitude"] | number}} / {{ data.location }}</small>
-
 		</p>
 	</div>
 </div>
