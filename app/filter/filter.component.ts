@@ -57,6 +57,7 @@ export class FilterComponent implements OnInit {
   // Select on change event
   OnChange(event) {
     this.selectedCity = null;
+    this.cities = [];
     if (this.selectedCountry != null) {
       this.getCitiesByCountry(this.selectedCountry);
       this.sharedService.refreshMap(event);
